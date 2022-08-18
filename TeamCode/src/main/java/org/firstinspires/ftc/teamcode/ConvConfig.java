@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This class defines and inits standart 5-motor 1-CRServo configuration.
  * Use object of this class to stop wasting time on writing stupid stuff another ten thousand times.
  */
+//test
 public class ConvConfig {
     private final ElapsedTime period = new ElapsedTime();
     /* Public OpMode members. */
