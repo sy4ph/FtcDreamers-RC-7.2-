@@ -171,7 +171,7 @@ public class TeleOpTC extends OpMode {
         double lateral = gamepad1.left_stick_x;
         double yaw = gamepad1.right_stick_x;
 
-        // Combine the joystick requests for each axis-motion to determine each wheel's power.
+        // Combine the joystick requests for each axis-motion to det ermine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
         double leftFrontPower = axial + lateral + yaw;
         double rightFrontPower = axial - lateral - yaw;
