@@ -89,5 +89,22 @@ public class AutoShow  extends LinearOpMode {
             telemetry.update();
         }
         fn = false;
+        int i = 0;
+        while (i < 5) {
+                robot.motorsSet(500,500,-500,-500);
+                while (!fn) {
+                    CheckFn(6);
+                    telemetry.update();
+                }
+                fn = false;
+                robot.motorsSet(-500,-500,500,500);
+                while (!fn) {
+                    CheckFn(6);
+                    telemetry.update();
+                }
+                fn = false;
+
+        }
+        robot.motorHand.setTargetPosition(625);
     }
 }
