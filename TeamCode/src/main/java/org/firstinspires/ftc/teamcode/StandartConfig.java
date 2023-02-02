@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 // TODO: 01.03.2022 Change PIDF coefficients; no idea which to use; also there is velocity regulators, not sure what to do with them
 /**
@@ -21,8 +22,9 @@ public class StandartConfig {
     public DcMotorEx motorFrontLeft = null;
     public DcMotorEx motorBackLeft = null;
     public DcMotorEx motorBackRight = null;
-    public DcMotorEx motorHand = null;
-    public CRServo servoVal = null;
+    public DcMotorEx motorHandOne = null;
+    public DcMotorEx motorHandTwo = null;
+    public Servo servoOne = null;
     public CRServo servoUtki = null;
     /* local OpMode members. */
     HardwareMap hwMap = null;
@@ -42,20 +44,23 @@ public class StandartConfig {
         motorFrontLeft = hwMap.get(DcMotorEx.class, "motorFrontLeft");
         motorBackLeft = hwMap.get(DcMotorEx.class, "motorBackLeft");
         motorBackRight = hwMap.get(DcMotorEx.class, "motorBackRight");
-        motorHand = hwMap.get(DcMotorEx.class, "motorHand");
+        motorHandOne = hwMap.get(DcMotorEx.class, "motorHandOne");
+        motorHandTwo = hwMap.get(DcMotorEx.class, "motorHandTwo");
 
         motorFrontRight.setDirection(DcMotorEx.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorEx.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        motorHand.setDirection(DcMotorEx.Direction.FORWARD);
+        motorHandOne.setDirection(DcMotorEx.Direction.FORWARD);
+        motorHandTwo.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set all motors to zero power
         motorFrontRight.setPower(0.);
         motorFrontLeft.setPower(0.);
         motorBackLeft.setPower(0.);
         motorBackRight.setPower(0.);
-        motorHand.setPower(0.);
+        motorHandOne.setPower(0.);
+        motorHandTwo.setPower(0.);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -64,28 +69,18 @@ public class StandartConfig {
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        motorHand.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        motorHand.setTargetPosition(0);
-        motorHand.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        motorHandOne.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motorHandOne.setTargetPosition(0);
+        motorHandOne.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        motorHandTwo.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motorHandTwo.setTargetPosition(0);
+        motorHandTwo.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         // Define and initialize ALL installed servos.
-        servoVal = hwMap.get(CRServo.class, "servoVal");
-        servoVal.setDirection(CRServo.Direction.REVERSE);
-        servoUtki = hwMap.get(CRServo.class, "servoUtki");
-        servoUtki.setDirection(CRServo.Direction.REVERSE);
+        servoOne = hwMap.get(Servo.class, "servoOne");
     }
 
-    public void start_reset() {
-        motorHand.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motorHand.setPower(-0.3);
-        try {
-            sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        motorHand.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motorHand.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
     public void initAuto(HardwareMap ahwMap) {
         // Save reference to Hardware map
         hwMap = ahwMap;
@@ -95,20 +90,24 @@ public class StandartConfig {
         motorFrontLeft = hwMap.get(DcMotorEx.class, "motorFrontLeft");
         motorBackLeft = hwMap.get(DcMotorEx.class, "motorBackLeft");
         motorBackRight = hwMap.get(DcMotorEx.class, "motorBackRight");
-        motorHand = hwMap.get(DcMotorEx.class, "motorHand");
+        motorHandOne = hwMap.get(DcMotorEx.class, "motorHandOne");
+        motorHandTwo = hwMap.get(DcMotorEx.class, "motorHandTwo");
+
 
         motorFrontRight.setDirection(DcMotorEx.Direction.FORWARD);
         motorFrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
         motorBackRight.setDirection(DcMotorEx.Direction.FORWARD);
         motorBackLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        motorHand.setDirection(DcMotorEx.Direction.FORWARD);
+        motorHandOne.setDirection(DcMotorEx.Direction.FORWARD);
+        motorHandTwo.setDirection(DcMotorEx.Direction.FORWARD);
 
         // Set all motors to zero power
         motorFrontRight.setPower(0.);
         motorFrontLeft.setPower(0.);
         motorBackLeft.setPower(0.);
         motorBackRight.setPower(0.);
-        motorHand.setPower(0.);
+        motorHandOne.setPower(0.);
+        motorHandTwo.setPower(0.);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -127,15 +126,17 @@ public class StandartConfig {
         motorBackLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         motorBackRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        motorHand.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        motorHand.setTargetPosition(0);
-        motorHand.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        motorHandOne.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motorHandOne.setTargetPosition(0);
+        motorHandOne.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+        motorHandTwo.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motorHandTwo.setTargetPosition(0);
+        motorHandTwo.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
         // Define and initialize ALL installed servos.
-        servoVal = hwMap.get(CRServo.class, "servoVal");
-        servoVal.setDirection(CRServo.Direction.REVERSE);
-        servoUtki = hwMap.get(CRServo.class, "servoUtki");
-        servoUtki.setDirection(CRServo.Direction.REVERSE);
+        servoOne = hwMap.get(Servo.class, "servoOne");
+        servoOne.setDirection(Servo.Direction.REVERSE);
     }
 
     private double FLpos = 0;
@@ -173,4 +174,7 @@ public class StandartConfig {
         }
         finished = true;
     }
+    public boolean waitV2() {
+        return (motorFrontRight.getVelocity() < 15 && motorFrontLeft.getVelocity() < 15 && motorBackRight.getVelocity() < 15 && motorBackLeft.getVelocity() < 15);
+        }
 }

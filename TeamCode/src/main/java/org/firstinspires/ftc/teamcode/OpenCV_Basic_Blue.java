@@ -97,7 +97,6 @@ public class OpenCV_Basic_Blue extends LinearOpMode {
         telemetry.update();
         waitForStart();
 
-        robot.start_reset();
 
         while (opModeIsActive())
         {
@@ -112,14 +111,21 @@ public class OpenCV_Basic_Blue extends LinearOpMode {
             telemetry.update();
 
             if(myPipeline.getRectArea() > 2000){
-                if(myPipeline.getRectMidpointX() > 900){
-                    AUTONOMOUS_C();
+                AUTONOMOUS_A();
                 }
-                else if(myPipeline.getRectMidpointX() > 400){
+            else {
+                myPipeline.colorChangePink();
+                if(myPipeline.getRectArea() > 2000){
                     AUTONOMOUS_B();
                 }
                 else {
-                    AUTONOMOUS_A();
+                    myPipeline.colorChangeYellow();
+                    if(myPipeline.getRectArea() > 2000){
+                        AUTONOMOUS_C();
+                    }
+                    else {
+                        AUTONOMOUS_A();
+                    }
                 }
             }
         }
@@ -155,94 +161,9 @@ public class OpenCV_Basic_Blue extends LinearOpMode {
         return value;
     }
     public void AUTONOMOUS_A(){
-        telemetry.addLine("Autonomous A");
-        if (done = false) {
-            robot.motorsSet(1400,-1400,1400,-1400);
-            sleep(1000);
-            done = true;
-            robot.motorsSet(2800, 2800, 2800, 2800);
-            sleep(1500);
-
-            robot.motorsSet(800, -800, 800, -800);
-            sleep(1500);
-
-            robot.motorHand.setPower(0.25);
-            robot.motorHand.setTargetPosition(280*2);
-            sleep(650);
-
-            robot.servoVal.setPower(-0.3);
-            sleep(1500);
-
-            robot.servoVal.setPower(0.);
-
-            robot.motorsSet(-2400, 2400, -2400, 2400);
-            robot.motorHand.setTargetPosition(50*4);
-            sleep(1500);
-
-            robot.motorsSet(7800, 7800, 7800, 7800);
-        }
     }
-    public void AUTONOMOUS_B(){
-        if (done = false) {
-            telemetry.addLine("Autonomous B");
-            done = true;
-            robot.motorsSet(1400,-1400,1400,-1400);
-            sleep(1000);
-
-            robot.motorsSet(2800, 2800, 2800, 2800);
-            sleep(1500);
-
-            robot.motorsSet(800, -800, 800, -800);
-            sleep(1500);
-
-            robot.motorHand.setPower(0.25);
-            robot.motorHand.setTargetPosition(77 * 4);
-            sleep(650);
-
-            robot.servoVal.setPower(-0.3);
-            sleep(1500);
-
-            robot.servoVal.setPower(0.);
-
-            robot.motorsSet(-2400, 2400, -2400, 2400);
-            robot.motorHand.setTargetPosition(77 * 4);
-            sleep(1500);
-
-            robot.motorsSet(7800, 7800, 7800, 7800);
-
-            done = true;
-        }
+    public void AUTONOMOUS_B() {
     }
     public void AUTONOMOUS_C(){
-        if (done = false) {
-            done = true;
-            telemetry.addLine("Autonomous C");
-
-            robot.motorsSet(1400,-1400,1400,-1400);
-            sleep(1000);
-
-            robot.motorsSet(2800, 2800, 2800, 2800);
-            sleep(1500);
-
-            robot.motorsSet(800, -800, 800, -800);
-            sleep(1500);
-
-            robot.motorHand.setPower(0.25);
-            robot.motorHand.setTargetPosition(35 * 4);
-            sleep(650);
-
-            robot.servoVal.setPower(-0.3);
-            sleep(1500);
-
-            robot.servoVal.setPower(0.);
-
-            robot.motorsSet(-2400, 2400, -2400, 2400);
-            robot.motorHand.setTargetPosition(50 * 4);
-            sleep(1500);
-
-            robot.motorsSet(7800, 7800, 7800, 7800);
-
-            done = true;
-        }
     }
 }

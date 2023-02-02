@@ -18,7 +18,16 @@ import java.util.List;
 
 public class ContourPipeline extends OpenCvPipeline {
     Scalar HOT_PINK = new Scalar(196, 23, 112);
-
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0.0, 0.0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 120.0, 120.0);
+    public void colorChangePink() {
+        scalarLowerYCrCb = new Scalar(0.0, 150.0, 120.0);
+        scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0); //pink
+    }
+    public void colorChangeYellow() {
+        scalarLowerYCrCb = new Scalar(0.0, 100.0, 0.0);
+        scalarUpperYCrCb = new Scalar(255.0, 170.0, 120.0);
+    }
     // Pink, the default color                         Y      Cr     Cb    (Do not change Y)
 //    public static Scalar scalarLowerYCrCb = new Scalar(0.0, 150.0, 120.0);
 //    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0);
@@ -28,8 +37,7 @@ public class ContourPipeline extends OpenCvPipeline {
 //    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 170.0, 120.0);
 
     // Green                                             Y      Cr     Cb
-     public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0.0, 0.0);
-     public static Scalar scalarUpperYCrCb = new Scalar(255.0, 120.0, 120.0);
+
 
     // Use this picture for you own color https://github.com/PinkToTheFuture/OpenCV_FreightFrenzy_2021-2022/blob/main/YCbCr.jpeg
     // Note that the Cr and Cb values range between 0-255. this means that the origin of the coordinate system is (128,128)
