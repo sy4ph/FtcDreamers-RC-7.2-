@@ -96,70 +96,6 @@ public class TeleOpTC extends OpMode {
     }
 
     public void loop() {
-        if (!gamepad1.left_bumper) {
-            if (gamepad1.right_trigger != 0) {
-                robot.servoVal.setPower(gamepad1.right_trigger);
-            }
-            if (gamepad1.left_trigger != 0) {
-                robot.servoVal.setPower(-gamepad1.left_trigger);
-            }
-            if ((gamepad1.right_trigger == 0) & (gamepad1.left_trigger == 0)) {
-                robot.servoVal.setPower(0.);
-            }
-        }
-        if (gamepad1.left_bumper) {
-            robot.servoVal.setPower(0.);
-            if (gamepad1.right_trigger != 0) {
-                robot.servoUtki.setPower(gamepad1.right_trigger);
-            }
-            if (gamepad1.left_trigger != 0) {
-                robot.servoUtki.setPower(-gamepad1.left_trigger);
-            }
-            if ((gamepad1.right_trigger == 0) & (gamepad1.left_trigger == 0)) {
-                robot.servoUtki.setPower(0.);
-            }
-        }
-        if (gamepad1.a) {
-            robot.motorHand.setTargetPosition(80);
-            robot.motorHand.setPower(0.1);
-        }
-        if (gamepad1.b) {
-            robot.motorHand.setTargetPosition(85*4); //-20
-            robot.motorHand.setPower(0.15);
-        }
-        if (gamepad1.y) {
-            if (gamepad1.left_bumper) {
-                robot.motorHand.setTargetPosition(225*4);
-            }
-            robot.motorHand.setTargetPosition(158*4); //-15
-            robot.motorHand.setPower(0.11);
-        }
-        if (gamepad1.right_bumper) {
-            robot.servoVal.setPower(0.);
-        }
-        if ((gamepad1.dpad_up) & (changesMade)) {
-            robot.motorHand.setTargetPosition(robot.motorHand.getTargetPosition() + 12);
-            robot.motorHand.setPower(0.5);
-            changesMade = false;
-        }
-        if ((gamepad1.dpad_down) & (changesMade)) {
-            robot.motorHand.setTargetPosition(robot.motorHand.getTargetPosition() - 12);
-            robot.motorHand.setPower(0.5);
-            changesMade = false;
-        }
-        if ((!gamepad1.dpad_down) & (!gamepad1.dpad_up)) {
-            changesMade = true;
-        }
-        if ((gamepad1.left_bumper) & (gamepad1.a)) {
-            robot.motorHand.setPower(0.);
-            try {
-                sleep(900);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            robot.motorHand.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            robot.motorHand.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
 
         double max;
 /**
@@ -202,8 +138,6 @@ public class TeleOpTC extends OpMode {
 
         // Telemetry of hand DCMotor and runtime.
         telemetry.addData("Status", "Run Time: " + runtime);
-        telemetry.addData("TargetPos", robot.motorHand.getTargetPosition());
-        telemetry.addData("CurrentPos", robot.motorHand.getCurrentPosition());
         telemetry.addData("Power (LeftFront)",leftFrontPower);
         telemetry.addData("Power (LeftBack)",leftBackPower);
         telemetry.addData("Power (RightBack)",rightBackPower);
@@ -213,8 +147,6 @@ public class TeleOpTC extends OpMode {
     }
 
     public void stop() {
-        // Move hand to 0 position
-        robot.motorHand.setPower(0.1);
-        robot.motorHand.setTargetPosition(0);
+
     }
 }
