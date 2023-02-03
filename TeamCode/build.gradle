@@ -25,10 +25,15 @@ android {
     namespace = 'org.firstinspires.ftc.teamcode'
     androidResources {
         noCompress 'tflite'
-    }
-}
 
-dependencies {
-    implementation project(':FtcRobotController')
-    annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+
+        packagingOptions {
+            jniLibs.useLegacyPackaging true
+        }
+    }
+
+    dependencies {
+        implementation project(':FtcRobotController')
+        annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
+    }
 }
