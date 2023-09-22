@@ -59,25 +59,6 @@ public class TeleOpTC extends OpMode {
 
     public void start() {
         runtime.reset();
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public void onOpened()
-            {
-                webcam.startStreaming(CAMERA_WIDTH, CAMERA_HEIGHT, OpenCvCameraRotation.SIDEWAYS_LEFT);
-            }
-
-            @Override
-            public void onError(int errorCode)
-            {
-                /*
-                 * This will be called if the camera could not be opened
-                 */
-            }
-        });
         // Only if you are using ftcdashboard
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
@@ -103,16 +84,14 @@ public class TeleOpTC extends OpMode {
  */
 //todo 28/02/22 please rewrite this
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-        double axial = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-        double lateral = gamepad1.left_stick_x;
+        double main = gamepad1.left_stick_y;
+        double strafe = gamepad1.left_stick_x;
         double yaw = gamepad1.right_stick_x;
 
-        // Combine the joystick requests for each axis-motion to det ermine each wheel's power.
-        // Set up a variable for each drive wheel to save the power level for telemetry.
-        double leftFrontPower = axial + lateral + yaw;
-        double rightFrontPower = axial - lateral - yaw;
-        double leftBackPower = axial - lateral + yaw;
-        double rightBackPower = axial + lateral - yaw;
+        double leftFrontPower = strafe+yaw;
+        double rightBackPower = yaw-strafe;
+        double rightFrontPower = main+yaw;
+        double leftBackPower = yaw-main;
 
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
@@ -130,7 +109,9 @@ public class TeleOpTC extends OpMode {
         robot.motorFrontRight.setPower(rightFrontPower*MULTIPLIER);
         robot.motorBackLeft.setPower(leftBackPower*MULTIPLIER);
         robot.motorBackRight.setPower(rightBackPower*MULTIPLIER);
-
+        /**
+         * Here should be code for hand *todo
+         */
 //        robot.motorFrontLeft.setPower(leftFrontPower*0.5);
 //        robot.motorFrontRight.setPower(rightFrontPower*0.5);
 //        robot.motorBackLeft.setPower(leftBackPower*0.5);

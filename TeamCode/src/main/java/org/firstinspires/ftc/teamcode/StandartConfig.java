@@ -24,8 +24,6 @@ public class StandartConfig {
     public DcMotorEx motorBackRight = null;
     public DcMotorEx motorHandOne = null;
     public DcMotorEx motorHandTwo = null;
-    public Servo servoOne = null;
-    public CRServo servoUtki = null;
     /* local OpMode members. */
     HardwareMap hwMap = null;
 
@@ -68,17 +66,11 @@ public class StandartConfig {
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorBackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motorHandTwo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         motorHandOne.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         motorHandOne.setTargetPosition(0);
         motorHandOne.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        motorHandTwo.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        motorHandTwo.setTargetPosition(0);
-        motorHandTwo.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        // Define and initialize ALL installed servos.
-        servoOne = hwMap.get(Servo.class, "servoOne");
     }
 
     public void initAuto(HardwareMap ahwMap) {
@@ -133,10 +125,6 @@ public class StandartConfig {
         motorHandTwo.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         motorHandTwo.setTargetPosition(0);
         motorHandTwo.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-
-        // Define and initialize ALL installed servos.
-        servoOne = hwMap.get(Servo.class, "servoOne");
-        servoOne.setDirection(Servo.Direction.REVERSE);
     }
 
     private double FLpos = 0;
